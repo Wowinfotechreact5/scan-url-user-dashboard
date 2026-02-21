@@ -11,6 +11,7 @@ export default function Header({ collapsed, setCollapsed }) {
             "/documentation": "Documentation",
             "/support": "Support",
             "/subscription": "Subscription",
+            "/activity-logs": "Activity Logs",
       };
 
       const title = routeTitles[location.pathname] || "Dashboard";

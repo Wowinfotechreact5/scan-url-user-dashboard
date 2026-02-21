@@ -1,16 +1,24 @@
-import { NavLink } from "react-router-dom";
 import {
       LayoutDashboard,
       Key,
       BookOpen,
       Mail,
-      Calendar
+      Calendar,
+      User,
+      ChevronDown,
+      Activity,
+      CreditCard,
+      Settings,
+      LogOut
+
 } from "lucide-react";
 
 import { useState } from "react";
 import BookCallModal from "./BookCallModal";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar({ collapsed }) {
+      const [accountOpen, setAccountOpen] = useState(false);
 
       const [showBookCall, setShowBookCall] =
             useState(false);
@@ -60,7 +68,22 @@ export default function Sidebar({ collapsed }) {
                   action: () => setShowBookCall(true),
             },
       ];
-
+      const baseClass = `
+    group flex items-center gap-3
+    px-3 py-2.5
+    rounded-lg
+    cursor-pointer
+    text-sm
+    transition-all duration-200
+    text-gray-600
+    hover:bg-gray-100
+  `;
+      const accountMenu = [
+            { name: "Activity Logs", icon: Activity, path: "/activity-logs" },
+            { name: "Subscription", icon: CreditCard, path: "/subscription" },
+            { name: "Settings", icon: Settings, path: "/settings", },
+            { name: "Logout", icon: LogOut, action: () => { } }
+      ];
       return (
 
             <>
@@ -107,24 +130,18 @@ export default function Sidebar({ collapsed }) {
                                                       key={index}
                                                       to={item.path}
                                                       className={({ isActive }) =>
-                                                            `
-                  ${baseClass}
-                  ${isActive
-                                                                  ? "bg-orange-50 text-orange-600 font-medium shadow-sm"
+                                                            `${baseClass}
+                   ${isActive
+                                                                  ? "bg-orange-50 text-orange-600"
                                                                   : ""
-                                                            }
-                `}
+                                                            }`
+                                                      }
                                                 >
-                                                      <item.icon
-                                                            size={18}
-                                                            className="transition-transform duration-200 group-hover:scale-110"
-                                                      />
 
-                                                      {!collapsed && (
-                                                            <span className="text-sm">
-                                                                  {item.name}
-                                                            </span>
-                                                      )}
+                                                      <item.icon size={18} />
+
+                                                      {!collapsed && item.name}
+
                                                 </NavLink>
                                           );
                                     }
@@ -153,7 +170,105 @@ export default function Sidebar({ collapsed }) {
                               })}
 
                         </nav>
+                        {/* Divider */}
+                        <div className="px-3 pb-2">
 
+                              <div className="border-t border-gray-200"></div>
+
+                        </div>
+
+
+
+                        {/* Bottom Account Section */}
+                        <div className="px-3 pb-4">
+
+
+                              {/* Account Header */}
+                              <div
+                                    onClick={() => setAccountOpen(!accountOpen)}
+                                    className={`
+            flex items-center justify-between
+            px-3 py-2.5
+            cursor-pointer
+            text-sm text-gray-600
+            hover:bg-gray-100
+            rounded-lg
+          `}
+                              >
+
+                                    <div className="flex items-center gap-3">
+
+                                          <User size={18} />
+
+                                          {!collapsed && "Account"}
+
+                                    </div>
+
+                                    {!collapsed && (
+                                          <ChevronDown
+                                                size={16}
+                                                className={`transition-transform ${accountOpen ? "rotate-180" : ""
+                                                      }`}
+                                          />
+                                    )}
+
+                              </div>
+
+
+
+                              {/* Account Submenu */}
+                              {accountOpen && !collapsed && (
+
+                                    <div className="mt-1 space-y-1">
+
+                                          {accountMenu.map((item, index) => {
+
+                                                if (item.path) {
+                                                      return (
+                                                            <NavLink
+                                                                  key={index}
+                                                                  to={item.path}
+                                                                  className={({ isActive }) =>
+                                                                        `
+                      ${baseClass}
+                      ml-6
+                      ${isActive || item.highlight
+                                                                              ? "bg-gray-100 text-gray-900 font-medium"
+                                                                              : ""
+                                                                        }
+                    `}
+                                                            >
+
+                                                                  <item.icon size={18} />
+
+                                                                  {item.name}
+
+                                                            </NavLink>
+                                                      );
+                                                }
+
+
+                                                return (
+                                                      <div
+                                                            key={index}
+                                                            onClick={item.action}
+                                                            className={`${baseClass} ml-6`}
+                                                      >
+
+                                                            <item.icon size={18} />
+
+                                                            {item.name}
+
+                                                      </div>
+                                                );
+
+                                          })}
+
+                                    </div>
+
+                              )}
+
+                        </div>
                   </div>
 
 

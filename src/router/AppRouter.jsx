@@ -6,6 +6,8 @@ import ApiKeys from "../pages/ApiKeys";
 import Documentation from "../pages/Documentation";
 import Support from "../pages/Support";
 import SubscriptionPage from "../components/SubscriptionPage";
+import ActivityLogs from "../pages/Accounts/ActivityLogs";
+import SettingsPage from "../pages/Settings/SettingsPage";
 
 export default function AppRouter() {
       return (
@@ -17,6 +19,8 @@ export default function AppRouter() {
                               <Route path="/documentation" element={<Documentation />} />
                               <Route path="/support" element={<Support />} />
                               <Route path="/subscription" element={<SubscriptionPage />} />
+                              <Route path="/activity-logs" element={<ActivityLogs />} />
+                              <Route path="/settings" element={<SettingsPage />} />
                         </Routes>
                   </DashboardLayout>
             </BrowserRouter>
