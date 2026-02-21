@@ -10,6 +10,7 @@ export default function Header({ collapsed, setCollapsed }) {
             "/apikeys": "API Keys",
             "/documentation": "Documentation",
             "/support": "Support",
+            "/subscription": "Subscription",
       };
 
       const title = routeTitles[location.pathname] || "Dashboard";

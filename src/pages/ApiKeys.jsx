@@ -7,10 +7,20 @@ import {
       Gauge,
       Trash2
 } from "lucide-react";
+import RegenerateKeyModal from "./Api Keys/RegenerateKeyModal";
+import DeleteApiKeyModal from "./Api Keys/DeleteApiKeyModal";
+import ChangeNameModal from "./Api Keys/ChangeNameModal";
+import IpWhitelistModal from "./Api Keys/IpWhitelistModal";
+import LimitCreditsModal from "./Api Keys/LimitCreditsModal";
+import { useNavigate } from "react-router-dom";
 export default function ApiKeys() {
       const [openMenuId, setOpenMenuId] = useState(null);
       const [apiName, setApiName] = useState("");
-
+      const [modalType, setModalType] = useState(false)
+      const [ipModalOpen, setIpModalOpen] = useState(false);
+      const [selectedKey, setSelectedKey] = useState(null);
+      const [whitelist, setWhitelist] = useState([]);
+      const [limitModalOpen, setLimitModalOpen] = useState(false);
       const [apiKeys, setApiKeys] = useState([
             {
                   id: 1,
@@ -57,6 +67,8 @@ export default function ApiKeys() {
             return () =>
                   document.removeEventListener("click", handleClickOutside);
       }, []);
+
+      const navigate = useNavigate()
       return (
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 overflow-visible">
 
@@ -138,7 +150,7 @@ export default function ApiKeys() {
                                     API keys allowed
                               </span>
 
-                              <button className="
+                              <button onClick={() => navigate('/subscription')} className="
         ml-2
         text-orange-600
         hover:text-orange-700
@@ -294,7 +306,10 @@ export default function ApiKeys() {
                                                             >
 
                                                                   {/* Change Name */}
-                                                                  <button className="
+                                                                  <button onClick={() => {
+                                                                        setSelectedKey(item);
+                                                                        setModalType("changeName");
+                                                                  }} className="
       flex items-center gap-3 w-full
       px-4 py-2 text-sm text-gray-700
       hover:bg-gray-50 transition-colors
@@ -305,7 +320,10 @@ export default function ApiKeys() {
 
 
                                                                   {/* Regenerate Key */}
-                                                                  <button className="
+                                                                  <button onClick={() => {
+                                                                        setSelectedKey(item);
+                                                                        setModalType("regenerate");
+                                                                  }} className="
       flex items-center gap-3 w-full
       px-4 py-2 text-sm text-gray-700
       hover:bg-gray-50 transition-colors
@@ -316,7 +334,10 @@ export default function ApiKeys() {
 
 
                                                                   {/* IP Whitelist */}
-                                                                  <button className="
+                                                                  <button onClick={() => {
+                                                                        setSelectedKey(item);
+                                                                        setIpModalOpen(true);
+                                                                  }} className="
       flex items-center gap-3 w-full
       px-4 py-2 text-sm text-gray-700
       hover:bg-gray-50 transition-colors
@@ -327,7 +348,10 @@ export default function ApiKeys() {
 
 
                                                                   {/* Limit Credits */}
-                                                                  <button className="
+                                                                  <button onClick={() => {
+                                                                        setSelectedKey(item);
+                                                                        setLimitModalOpen(true);
+                                                                  }} className="
       flex items-center gap-3 w-full
       px-4 py-2 text-sm text-gray-700
       hover:bg-gray-50 transition-colors
@@ -341,7 +365,10 @@ export default function ApiKeys() {
 
 
                                                                   {/* Delete */}
-                                                                  <button className="
+                                                                  <button onClick={() => {
+                                                                        setSelectedKey(item);
+                                                                        setModalType("delete");
+                                                                  }} className="
       flex items-center gap-3 w-full
       px-4 py-2 text-sm text-red-500
       hover:bg-red-50 transition-colors
@@ -364,7 +391,56 @@ export default function ApiKeys() {
                         </table>
 
                   </div>
+                  <ChangeNameModal
+                        isOpen={modalType === "changeName"}
+                        apiKey={selectedKey}
+                        onClose={() => setModalType(null)}
+                  // onSave={handleChangeName}
+                  />
 
+                  <DeleteApiKeyModal
+                        isOpen={modalType === "delete"}
+                        apiKey={selectedKey}
+                        onClose={() => setModalType(null)}
+                  // onDelete={handleDelete}
+                  />
+
+                  <RegenerateKeyModal
+                        isOpen={modalType === "regenerate"}
+                        apiKey={selectedKey}
+                        onClose={() => setModalType(null)}
+                  // onRegenerate={handleRegenerate}
+                  />
+                  <IpWhitelistModal
+                        isOpen={ipModalOpen}
+                        onClose={() => setIpModalOpen(false)}
+                        apiKey={selectedKey}
+                        whitelist={whitelist}
+                  // onAdd={(ip) => setWhitelist(prev => [...prev, ip])}
+                  // onDelete={(ip) =>
+                  //       setWhitelist(prev => prev.filter(x => x !== ip))
+                  // }
+                  />
+
+                  <LimitCreditsModal
+                        isOpen={limitModalOpen}
+                        onClose={() => setLimitModalOpen(false)}
+                        apiKey={selectedKey}
+                        defaultValue={selectedKey?.creditLimit}
+                  // onSave={(value) => {
+
+                  //       setApiKeys(prev =>
+                  //             prev.map(k =>
+                  //                   k.id === selectedKey.id
+                  //                         ? { ...k, creditLimit: value }
+                  //                         : k
+                  //             )
+                  //       );
+
+                  //       setLimitModalOpen(false);
+
+                  // }}
+                  />
             </div>
       );
 }

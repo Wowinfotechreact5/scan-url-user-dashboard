@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import ApiKeys from "../pages/ApiKeys";
 import Documentation from "../pages/Documentation";
 import Support from "../pages/Support";
+import SubscriptionPage from "../components/SubscriptionPage";
 
 export default function AppRouter() {
       return (
@@ -15,6 +16,7 @@ export default function AppRouter() {
                               <Route path="/apikeys" element={<ApiKeys />} />
                               <Route path="/documentation" element={<Documentation />} />
                               <Route path="/support" element={<Support />} />
+                              <Route path="/subscription" element={<SubscriptionPage />} />
                         </Routes>
                   </DashboardLayout>
             </BrowserRouter>
