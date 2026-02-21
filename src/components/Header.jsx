@@ -12,6 +12,7 @@ export default function Header({ collapsed, setCollapsed }) {
             "/support": "Support",
             "/subscription": "Subscription",
             "/activity-logs": "Activity Logs",
+            "/settings": "Settings",
       };
 
       const title = routeTitles[location.pathname] || "Dashboard";
@@ -65,7 +66,7 @@ export default function Header({ collapsed, setCollapsed }) {
                   <div className="flex items-center gap-3">
 
                         {/* Example placeholder for future */}
-                        <div className="
+                        {/* <div className="
           w-9 h-9
           rounded-full
           bg-orange-100
@@ -74,7 +75,7 @@ export default function Header({ collapsed, setCollapsed }) {
           font-medium text-sm
         ">
                               U
-                        </div>
+                        </div> */}
 
                   </div>
 

@@ -16,6 +16,8 @@ import {
 import { useState } from "react";
 import BookCallModal from "./BookCallModal";
 import { NavLink } from "react-router-dom";
+// import logo from '../assets/Gemini_Ge.png'
+import logo from '../assets/Logo-Scan_URL__1_-removebg-preview.png'
 
 export default function Sidebar({ collapsed }) {
       const [accountOpen, setAccountOpen] = useState(false);
@@ -82,7 +84,8 @@ export default function Sidebar({ collapsed }) {
             { name: "Activity Logs", icon: Activity, path: "/activity-logs" },
             { name: "Subscription", icon: CreditCard, path: "/subscription" },
             { name: "Settings", icon: Settings, path: "/settings", },
-            { name: "Logout", icon: LogOut, action: () => { } }
+            // { name: "Logout", icon: LogOut, action: () => { } }
+            { name: "Logout", icon: LogOut, path: '/login' }
       ];
       return (
 
@@ -99,12 +102,18 @@ export default function Sidebar({ collapsed }) {
 
                         {/* Logo */}
                         <div className="h-16 flex items-center px-4">
-                              {!collapsed && (
+                              <img
+                                    src={logo}
+                                    alt="ScanUrl Logo"
+                                    className="h-10 w-auto object-contain"
+                              />
+                              {/* {!collapsed && (
                                     <h1 className="text-lg font-semibold tracking-tight">
                                           <span className="text-orange-500 font-bold">Scan</span>
                                           <span className="text-gray-800">Url</span>
                                     </h1>
-                              )}
+                              )} */}
+
                         </div>
 
 
